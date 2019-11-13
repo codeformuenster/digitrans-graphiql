@@ -1,16 +1,21 @@
-FROM node:12-alpine as build
-MAINTAINER Digitransit version: 0.1
+FROM node:12-alpine
 
 WORKDIR /opt/digitransit-graphql
-
 COPY . ./
 RUN yarn && yarn build
 
+# ---
+
 FROM node:12-alpine
-WORKDIR /app
-COPY --from=build /opt/digitransit-graphql/run.sh ./
-COPY --from=build /opt/digitransit-graphql/build ./
-COPY --from=build /opt/digitransit-graphql/serve.json ./
 RUN yarn global add serve
+
+WORKDIR /app
+COPY --from=0 /opt/digitransit-graphql/build ./
+COPY --from=0 /opt/digitransit-graphql/serve.json ./
+
+# FIXME mv possible instead?
+RUN mkdir ./graphiql \
+    && ln -s ./static ./graphiql/static
+
 EXPOSE 8080
-ENTRYPOINT ["./run.sh"]
+ENTRYPOINT ["serve", "-l", "8080", "-s"]

@@ -5,7 +5,8 @@ import 'graphiql/graphiql.css';
 
 import './fix.css';
 
-const digitransitUrl = (apiType, router) => `https://${apiType === 'dev' ? 'dev-api' : 'api'}.digitransit.fi/routing/v1/routers/${router}/index/graphql`
+// const digitransitUrl = (apiType, router) => `https://${apiType === 'dev' ? 'dev-api' : 'api'}.digitransit.fi/routing/v1/routers/${router}/index/graphql`
+const digitransitUrl = (apiType, router) => `https://${apiType === 'dev' ? 'dev-api' : 'api'}.digitransit.codeformuenster.org/routing/v1/routers/${router}/index/graphql`
 
 const graphQLFetcher = (apiType, router) => graphQLParams => fetch(digitransitUrl(apiType, router), {
   method: 'post',
@@ -23,7 +24,8 @@ class CustomGraphiQL extends React.Component {
     const variables = urlSearchParams.has('variables') && decodeURIComponent(urlSearchParams.get('variables'))
     const operationName = urlSearchParams.has('operationName') && decodeURIComponent(urlSearchParams.get('operationName'))
 
-    this.state = { query, variables, operationName, apiType: (!!props.location.state && props.location.state.apiType) || (window.location.hostname === 'api.digitransit.fi' ? 'prod' : 'dev') }
+    // this.state = { query, variables, operationName, apiType: (!!props.location.state && props.location.state.apiType) || (window.location.hostname === 'api.digitransit.fi' ? 'prod' : 'dev') }
+    this.state = { query, variables, operationName, apiType: (!!props.location.state && props.location.state.apiType) || (window.location.hostname === 'api.digitransit.codeformuenster.org' ? 'prod' : 'dev') }
     
     this.graphiql = React.createRef()
   }
