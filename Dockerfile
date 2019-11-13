@@ -18,4 +18,4 @@ RUN mkdir ./graphiql \
     && ln -s ./static ./graphiql/static
 
 EXPOSE 8080
-ENTRYPOINT ["serve", "-l", "8080", "-s"]
+ENTRYPOINT ["serve", "--listen", "tcp://0:8080", "--single"]
