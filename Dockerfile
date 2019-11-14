@@ -15,7 +15,8 @@ COPY --from=0 /opt/digitransit-graphql/serve.json ./
 
 # FIXME mv possible instead?
 RUN mkdir ./graphiql \
-    && ln -s ./static ./graphiql/static
+    # && ln -s ./static ./graphiql/static
+    mv ./static ./graphiql/static
 
 EXPOSE 8080
 ENTRYPOINT ["serve", "--listen", "tcp://0:8080", "--single"]
